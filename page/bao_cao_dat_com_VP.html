@@ -1,0 +1,167 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Báo cáo đặt cơm theo VP</title>
+
+  <!-- import bootstrap  -->
+  <link rel="stylesheet" href="../css/bootstrap/angular-material.css">
+  <link rel="stylesheet" href="../css/bootstrap/ivh-treeview.css">
+  <link rel="stylesheet" href="../css/bootstrap/ivh-treeview-theme-basic.css">
+
+  <!-- import bootstrap  -->
+  <link rel="stylesheet" href="../css/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap/font-awesome.min.css">
+  <!-- import jquery -->
+  <script src="../js/bootstrap/jquery-3.2.1.slim.min.js"></script>
+  <script src="../js/bootstrap/popper.min.js"></script>
+  <script src="../js/bootstrap/bootstrap.min.js"></script>
+  <script src="../js/bootstrap/jquery.min.js"></script>
+
+  <!-- import momentJS library-->
+  <script src="../js/bootstrap/moment.js"></script>
+
+  <!-- import angular library -->
+  <script src="../js/bootstrap/angular.min.js"></script>
+  <script src="../js/bootstrap/angular-animate.min.js"></script>
+  <script src="../js/bootstrap/angular-route.min.js"></script>
+  <script src="../js/bootstrap/angular-aria.min.js"></script>
+  <script src="../js/bootstrap/angular-messages.min.js"></script>
+  <script src="../js/bootstrap/angular-material.js"></script>
+  <script src="../js/bootstrap/ivh-treeview.js"></script>
+
+
+  <link rel="stylesheet" type="text/css" href="../css/baocaodatcomVP.css">
+  <script type="text/javascript" src="../js/baocaodatcomVP_function.js"></script>
+</head>
+
+<body ng-app="MyApp" ng-controller="AppCtrl as ctrl" style="background-color: #465069 !important; color: #FEFEFC;">
+  <div>
+    <div ng-include src="'header.html'"></div>
+  </div>
+  <div class="container-fluid" style="margin-top:100px;">
+    <div layout-gt-xs="row">
+      <div class="col-sm-10 content">
+        <form name="form_config" ng-submit="$event.preventDefault()">
+          <fieldset class="kitchen-border">
+            <legend class="kitchen-border">Báo cáo đặt cơm theo văn phòng</legend>
+            <div class="col-sm-6 config-left">
+              <div class="control-label form-group row">
+                <div class="col-sm-6">
+                  <div ivh-treeview="ctrl.stuff">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 config-right">
+              <div class="form-group row">
+                <div class="col-sm-6">
+                  <label class="control-label col-sm-6">Bếp</label>
+                  <div class="col-sm-6">
+                    <md-autocomplete ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedItem" md-search-text-change="ctrl.searchTextChange(ctrl.searchText)" md-search-text="ctrl.searchText" md-selected-item-change="ctrl.selectedItemChange(item)"
+                      md-items="item in ctrl.querySearch(ctrl.searchText)" md-item-text="item.display" md-min-length="0" placeholder="Chọn bếp">
+                      <md-item-template>
+                        <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
+                      </md-item-template>
+                      <md-not-found>
+                        No states matching "{{ctrl.searchText}}" were found.
+                        <a ng-click="ctrl.newState(ctrl.searchText)">Create a new one!</a>
+                      </md-not-found>
+                    </md-autocomplete>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label class="control-label col-sm-6">Tháng</label>
+                  <div class="col-sm-12">
+                    <div flex-gt-xs>
+                      <md-input-container>
+                        <md-datepicker ng-model="ctrl.myDate" md-mode="month" md-placeholder="Enter date" md-min-date="ctrl.minDate" md-max-date="ctrl.maxDate" md-date-filter="ctrl.onlyWeekendsPredicate">
+                          <div ng-messages="myForm.dateField.$error">
+                            <div ng-message="valid">Use a valid date format</div>
+                            <div ng-message="mindate">Choose a date on or after {{ctrl.minDate | date:"shortDate"}}</div>
+                            <div ng-message="maxdate">Choose a date on or before {{ctrl.maxDate | date:"shortDate"}}</div>
+                          </div>
+                      </md-input-container>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          <div class="row row-button">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4 ">
+              <button type="button" class="btn btn-default btn-lg button-search" ng-click="search()" style="color: white;">
+                            <i class="fa fa-search"></i> Search
+                        </button>
+              <button type="button" class="btn btn-default btn-lg button-export" ng-click="export()" style="color: white;">
+                            <i class="fa fa-share-square-o"></i> Export
+                        </button>
+            </div>
+            <div class="col-sm-4"></div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div layout-gt-xs="row">
+      <div class="col-sm-10 content">
+        <table ng-if="mapStatus.loading" class="table table-bordered" id="tableReport">
+          <thead>
+            <tr>
+              <th scope="col" width="5%">STT</th>
+              <th scope="col" width="15%">Đơn vị</th>
+              <th scope="col" width="2%">1</th>
+              <th scope="col" width="2%">2</th>
+              <th scope="col" width="2%">3</th>
+              <th scope="col" width="2%">4</th>
+              <th scope="col" width="2%">5</th>
+              <th scope="col" width="2%">6</th>
+              <th scope="col" width="2%">7</th>
+              <th scope="col" width="2%">8</th>
+              <th scope="col" width="2%">9</th>
+              <th scope="col" width="2%">10</th>
+              <th scope="col" width="2%">11</th>
+              <th scope="col" width="2%">12</th>
+              <th scope="col" width="2%">13</th>
+              <th scope="col" width="2%">14</th>
+              <th scope="col" width="2%">15</th>
+              <th scope="col" width="2%">16</th>
+              <th scope="col" width="2%">17</th>
+              <th scope="col" width="2%">18</th>
+              <th scope="col" width="2%">19</th>
+              <th scope="col" width="2%">20</th>
+              <th scope="col" width="2%">21</th>
+              <th scope="col" width="2%">22</th>
+              <th scope="col" width="2%">23</th>
+              <th scope="col" width="2%">24</th>
+              <th scope="col" width="2%">25</th>
+              <th scope="col" width="2%">26</th>
+              <th scope="col" width="2%">27</th>
+              <th scope="col" width="2%">28</th>
+              <th scope="col" width="2%">29</th>
+              <th scope="col" width="2%">30</th>
+              <th scope="col" width="2%">31</th>
+              <th scope="col" width="18%">Tổng</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="x in cookerData track by $index ">
+              <td>{{$index + 1}}</td>
+              <td>{{x.team}}</td>
+              <td ng-repeat="y in x.months">
+                {{y.total}}
+              </td>
+              <td>{{x.total}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript " src="../js/baocaodatcomVP_controller.js "></script>
+</body>
+
+</html>

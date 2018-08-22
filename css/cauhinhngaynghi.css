@@ -1,0 +1,72 @@
+* {
+	font-family: arial, sans-serif;
+	box-sizing: border-box;
+	font-size: 16px;
+	color: #FEFEFC;
+	background-color: #465069;
+}
+
+body{
+	color: #FEFEFC;
+	background-color: #465069;
+}
+
+.content{
+	margin: auto;
+	top: 10px;
+	padding: 10px;
+}
+
+fieldset.kitchen-border {
+    border: 2px solid #636874 !important;
+    padding: 0 1.4em 1.4em 1.4em !important;
+    margin: 0 0 1.5em 0 !important;
+    -webkit-box-shadow:  0px 0px 0px 0px #636874;
+            box-shadow:  0px 0px 0px 0px #636874;
+}
+
+legend.kitchen-border {
+        font-size: 1.2em !important;
+        font-weight: bold !important;
+        text-align: left !important;
+        width:auto;
+        padding:0 10px;
+        border-bottom:none;
+}
+.errorField{
+	color: red;
+	font-size: 12px;
+}
+
+.gj-picker{
+	color: black;
+}
+
+.gj-icon{
+	top: 5px !important;
+    left: 5px !important;
+    font-size: 30px !important;
+}
+
+.border-left-0{
+	background: #095046;
+}
+.button-save{
+	background: #423636e0;
+	color: white;
+}
+
+table th{
+	text-align: center;
+}
+
+.remove-date{
+	margin-left: 30%;
+}
+
+.remove-date a{
+	color: white;
+}
+.remove-date i{
+	font-size: 30px;
+}

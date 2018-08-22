@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Quan ly dat xe</title>
+	<!-- import bootstrap  -->
+	<link rel="stylesheet" href="../css/bootstrap/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap/font-awesome.min.css">
+	<!-- import jquery -->
+	<script src="../js/bootstrap/jquery-3.2.1.slim.min.js"></script>
+	<script src="../js/bootstrap/popper.min.js"></script>
+	<script src="../js/bootstrap/bootstrap.min.js"></script>
+	<script src="../js/bootstrap/jquery.min.js"></script>
+	<script src="../js/bootstrap/jquery.datetimepicker.full.min.js"></script>
+	<link rel="stylesheet" href="../css/bootstrap/jquery.datetimepicker.css">
+	<!-- import angular library -->
+	<script src="../js/bootstrap/angular.min.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="../css/quanlydatxe.css">
+	<script src="../js/quanlydatxe_controller.js"></script>
+</head>
+
+<body ng-app="myAppDatXe" ng-controller="myControllerDatXe">
+	<div>
+		<div ng-include src="'header.html'"></div>
+	</div>
+	<div class="container-fluid" style="margin-top:100px;">
+		<div class="row">
+			<div class="col-sm-1"></div>
+			<div class="col-sm-10">
+				<form>
+					<fieldset class="searchGoOut">
+						<legend class="searchGoOut">Điều kiện tìm kiếm</legend>
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="form-group row mb-3">
+									<div class="col-sm-5" style="text-align: right; padding-top: 6px;">Lái xe:</div>
+									<div class="col-sm-7">
+										<div class="input-group">
+											<input type="text" name="driverName" id="dropDownDriver" class="form-control dropdown-toggle input-cursor" data-toggle="dropdown" ng-model="driverCode" readonly required maxlength="50" autocomplete="off">
+											<button type="button" class="btn btn-default dropdown-toggle btn-custom" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											<span class="caret"></span>
+											</button>
+											<ul class="dropdown-menu ulDv scrollable-menu" role="menu">
+												<li ng-repeat="x in objDriver" ng-click="selectDriver(x.code, x.name)">
+													<a href="#">{{ x.name }}</a>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="form-group row mb-3">
+									<div class="col-sm-2" style="text-align: left; padding-top: 6px;">Xe:</div>
+									<div class="col-sm-7">
+										<div class="input-group">
+											<input type="text" name="carName" id="dropDownCar" class="form-control dropdown-toggle input-cursor" data-toggle="dropdown" ng-model="carBS" readonly required maxlength="50" autocomplete="off">
+											<button type="button" class="btn btn-default dropdown-toggle btn-custom" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											<span class="caret"></span>
+											</button>
+											<ul class="dropdown-menu ulDv scrollable-menu" role="menu">
+												<li ng-repeat="x in objCar" ng-click="selectCar(x.BS)">
+													<a href="#">{{ x.BS }}</a>
+												</li>
+											</ul>
+										</div>
+									</div>
+									<div class="col-sm-3"></div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="form-group row">
+									<div class="col-sm-5" style="text-align: right; padding-top: 6px;">Thời gian từ:</div>
+									<div class="col-sm-7">
+										<div class="input-group">
+											<input type="text" class="form-control input-cursor" id="fromDate" ng-model="fromTime" placeholder="YYYY/MM/DD HH:mm" readonly autocomplete="off">
+											<div class="input-group-append" id="iconCalFrom">
+												<span class="input-group-text"><i class="fa fa-calendar"></i></span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="form-group row">
+									<div class="col-sm-2" style="text-align: left; padding-top: 6px;">đến</div>
+									<div class="col-sm-7">
+										<div class="input-group mb-3">
+											<input type="text" class="form-control input-cursor" id="toDate" ng-model="toTime" placeholder="YYYY/MM/DD HH:mm" readonly autocomplete="off">
+											<div class="input-group-append" id="iconCalTo">
+												<span class="input-group-text"><i class="fa fa-calendar"></i></span>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-3"></div>
+								</div>
+							</div>
+						</div>
+					</fieldset>
+					<div class="row row-button">
+						<div class="col-sm-4"></div>
+						<div class="col-sm-4 ">
+							<button type="submit" class="btn btn-primary" ng-click="searchDatXe()">
+							<i class="fa fa-search"></i> Search
+							</button>
+							<button type="submit" id="btnReset" class="btn btn-info" ng-click="reset()">
+							<i class="fa fa-refresh"></i> Reset
+							</button>
+						</div>
+						<div class="col-sm-4"></div>
+					</div>
+				</form>
+			</div>
+			<div class="col-sm-1"></div>
+		</div>
+		<div class="row">
+			<div class="col-sm-1"></div>
+			<div class="col-sm-10">
+				<div class="modal fade" id="myModal">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+
+							<!-- Modal Header -->
+							<div class="modal-header">
+								<h4 class="modal-title">Thông tin chuyến đi</h4>
+								<button type="button" class="close" style="margin-left: 0px;" data-dismiss="modal">&times;</button>
+							</div>
+
+							<!-- Modal body -->
+							<div class="modal-body" ng-model="inforTrip">
+								<div class="row">
+									<div class="col-sm-1"></div>
+									<div class="col-sm-10">
+										<div class="row">
+											Thời gian: Từ &nbsp;<b>{{ inforTrip.from }}</b>&nbsp; đến &nbsp;<b>{{ inforTrip.to }}</b>
+										</div>
+										<div class="row">
+											Loại xe: &nbsp;<b>{{ inforTrip.car.type }}</b>
+										</div>
+										<div class="row">
+											Số chỗ: &nbsp;<b>{{ inforTrip.car.seat }}</b>&nbsp; chỗ
+										</div>
+										<div class="row">
+											Loại hành trình: &nbsp;<b>{{ inforTrip.typeTrip }}</b>
+										</div>
+										<div class="row">
+											Lý do: &nbsp;<b>{{ inforTrip.reason }}</b>
+										</div>
+										<div class="row">
+											Số lượng người đi cùng: &nbsp;<b>{{ inforTrip.members.length }}</b>
+											<table class="table table-hover popupTrip">
+												<thead>
+													<tr>
+														<th>Người đi cùng</th>
+														<th>Đơn vị</th>
+													</tr>
+												</thead>
+												<tr ng-repeat="x in inforTrip.members">
+													<td>{{ x.name }}</td>
+													<td>{{ x.dv }}</td>
+												</tr>
+											</table>
+										</div>
+										<div class="row">
+											Người phê duyệt
+											<table class="table table-hover popupTrip">
+												<tr>
+													<td>Quản lý trực tiếp</td>
+													<td>{{ inforTrip.manager }}</td>
+												</tr>
+												<tr>
+													<td>Lãnh đạo đơn vị</td>
+													<td>{{ inforTrip.ULs }}</td>
+												</tr>
+												<tr>
+													<td>Chánh văn phòng</td>
+													<td>{{ inforTrip.COS }}</td>
+												</tr>
+											</table>
+										</div>
+									</div>
+									<div class="col-sm-1"></div>
+								</div>
+							</div>
+
+							<!-- Modal footer -->
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<table id="tableGoOut" class="searchTable" ng-show="isInvisible">
+					<thead>
+						<tr>
+							<th rowspan="2">STT</th>
+							<th rowspan="2">Lái xe</th>
+							<th rowspan="2">Biển số</th>
+							<th colspan="2">Thời gian</th>
+							<th rowspan="2">Ratting</th>
+						</tr>
+						<tr>
+							<th>Đi</th>
+							<th>Về</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="x in objSearch">
+							<td>{{$index+1}}</td>
+							<td><a href="#" data-toggle="modal" data-target="#myModal" ng-click="showTripInfo(x.codeTrip)">{{x.driver.name}}</a></td>
+							<td>{{x.car.BS}}</td>
+							<td>{{x.from}}</td>
+							<td>{{x.to}}</td>
+							<td>{{x.ratting}}</td>
+						</tr>
+						<tr>
+							<th colspan="5">Tổng</th>
+							<td>{{ avrRatting == null ? "NaN" : avrRatting }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="col-sm-1"></div>
+		</div>
+	</div>
+</body>
+
+</html>

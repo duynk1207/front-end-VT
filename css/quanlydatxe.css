@@ -1,0 +1,142 @@
+body {
+    font-family: arial, sans-serif;
+    color: #FEFEFC;
+    background-color: #465069;
+    box-sizing: border-box;
+}
+
+.row {
+    margin: 0px auto;
+}
+
+fieldset.searchGoOut {
+    border: 2px solid #636874 !important;
+    padding: 0 1.4em 1.4em 1.4em !important;
+    margin: 0 0 1.5em 0 !important;
+    -webkit-box-shadow:  0px 0px 0px 0px #636874;
+            box-shadow:  0px 0px 0px 0px #636874;
+}
+
+legend.searchGoOut {
+    font-size: 1.2em !important;
+    font-weight: bold !important;
+    text-align: left !important;
+    width: auto;
+    color: white;
+    padding: 0px 10px;
+    border-bottom: none;
+}
+
+.row-button{
+    text-align: center;
+    margin: auto;
+    margin-bottom: 20px;
+}
+
+table.searchTable {
+    width: 100%;
+    margin: 0px auto;
+    text-align: center !important;
+    border-collapse: collapse;
+}
+
+table.searchTable th {
+    background-color: #38557A !important;
+    text-align: center !important;
+}
+
+table.searchTable td, table.searchTable th {
+    border: 2px solid #A2A5AC;
+    padding: 8px;
+}
+
+table.searchTable td a {
+	text-decoration: none;
+	color: #24E3EC !important;
+}
+
+ul.ulDv li{
+    background: white;
+    padding: 2px 5px;
+    text-align: left;
+    width: 100%;
+    cursor: pointer;
+}
+
+.ulDv {
+    width: 100%;
+}
+
+.btn-custom {
+	border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+.content-right{
+	float: right;
+}
+.content-left{
+	float: left;
+}
+
+.input-group-append {
+	cursor: pointer;
+}
+
+.input-group-append:hover {
+	opacity: 0.7;
+}
+
+.input-append .btn.dropdown-toggle {
+    float: none;
+}
+
+input.input-cursor{
+    cursor: pointer !important;
+}
+
+ul.ulDv li a {
+    text-decoration: none;
+}
+
+.scrollable-menu {
+    height: 100px;
+    max-height: 200px;
+    overflow-x: hidden;
+}
+
+.modal-dialog-centered {
+	max-width: 44% !important;
+	margin-top: 30px;
+}
+
+.modal-dialog {
+	overflow-y: initial !important;
+	max-height: 85%;
+	min-height: 150px;
+}
+
+.modal-body{
+  height: 400px;
+  overflow-y: auto;
+}
+
+.modal-header, .modal-footer {
+	background-color: #4285F4;
+}
+
+.modal-title {
+	margin: 0px auto;
+}
+
+.modal-content {
+	background-color: #5D78AB !important;
+}
+
+table.popupTrip {
+	text-align: center;
+	width: 80%;
+	margin: 0px auto;
+	margin-bottom: 10px;
+	border: 2px solid white;
+}

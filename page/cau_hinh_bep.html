@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Cấu Hình Bếp</title>
+
+	<!-- import bootstrap  -->
+	<link rel="stylesheet" href="../css/bootstrap/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap/font-awesome.min.css">
+	<!-- import jquery -->
+	<script src="../js/bootstrap/jquery-3.2.1.slim.min.js"></script>
+	<script src="../js/bootstrap/popper.min.js"></script>
+	<script src="../js/bootstrap/bootstrap.min.js"></script>
+	<script src="../js/bootstrap/jquery.min.js"></script>
+	<!-- import angular library -->
+	<script src="../js/bootstrap/angular.min.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="../css/cauhinhbep.css">
+	<script type="text/javascript" src="../js/cauhinhbep_controller.js"></script>
+	<script type="text/javascript" src="../js/cauhinhbep_function.js"></script>
+
+</head>
+
+<body ng-app="myApp" ng-controller="namesCtrl">
+	<div>
+		<div ng-include src="'header.html'"></div>
+	</div>
+	<div class="container-fluid" style="margin-top:100px;">
+		<div class="row">
+			<div class="col-sm-10 content">
+				<form name="form_config">
+					<fieldset class="kitchen-border">
+						<legend class="kitchen-border">Cấu hình bếp</legend>
+						<div class="col-sm-6 config-left">
+
+							<div class="form-group row">
+								<label class="col-sm-3 col-form-label">Tên bếp</label>
+								<div class="col-sm-9">
+									<input type="text" name="nameKitchen" value="" class="form-control" id="txtNameKitchen" ng-model="nameKitchen" required="" maxlength="20">
+									<span style="color:red" ng-show="form_config.nameKitchen.$dirty && form_config.nameKitchen.$invalid">
+								    		<p class="errorField" ng-show="form_config.nameKitchen.$error.required">Vui lòng điền vào trường này</p>
+								    	</span>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-3 col-form-label">Vị trí bếp</label>
+								<div class="col-sm-9">
+									<input type="text" name="posKitchen" value="0" class="form-control" id="txtKitchenPos" ng-model="posKitchen" required="" maxlength="20">
+									<span style="color:red" ng-show="form_config.posKitchen.$dirty && form_config.posKitchen.$invalid">
+								    		<p class="errorField" ng-show="form_config.posKitchen.$error.required">Vui lòng điền vào trường này</p>
+								    	</span>
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<label class="control-label col-sm-3">Bếp trưởng</label>
+								<div class="col-sm-9">
+									<div class="input-group dropdown">
+										<input type="text" name="nameChefl" value="" class="form-control dropdown-toggle inputChefl" data-toggle="dropdown" ng-model="nameChefl" required="" maxlength="50">
+
+										<div class="input-group-btn">
+											<button type="button" class="btn btn-default dropdown-toggle btn-custom" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										        	<span class="caret"></span>
+										        </button>
+											<ul class="dropdown-menu ul-chefl" id="listChefl">
+												<li ng-repeat="x in names | filter:nameChefl" ng-click='eventSelectChefl(x)'>
+													<a href="#">{{ x.cheflName }}</a>
+												</li>
+
+											</ul>
+										</div>
+
+									</div>
+									<span style="color:red" ng-show="form_config.nameChefl.$dirty && form_config.nameChefl.$invalid">
+								    		<p class="errorField" ng-show="form_config.nameChefl.$error.required">Vui lòng điền vào trường này</p>
+								    	</span>
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<label class="col-sm-3 col-form-label">SĐT</label>
+								<div class="col-sm-9">
+									<input type="text" name="sdt" value="" id="sdt" class="form-control" ng-disabled="true" ng-model="sdt">
+								</div>
+							</div>
+
+
+						</div>
+						<div class="col-md-6 config-right">
+							<div class="form-group row">
+								<label class="col-sm-3 col-form-label" style="text-align: right;">Ghi chú</label>
+								<div class="col-sm-9">
+									<textarea class="form-control" rows="5" ng-model="comment" maxlength="200"></textarea>
+								</div>
+							</div>
+
+						</div>
+					</fieldset>
+					<div class="row row-button">
+						<div class="col-sm-4"></div>
+						<div class="col-sm-4 ">
+							<button type="submit" class="btn btn-default btn-lg button-save " ng-click="addNewRow()">
+        				<i class="fa fa-floppy-o"></i> Save
+      				</button>
+							<button type="button" class="btn btn-default btn-lg button-export" ng-click="export()">
+				        <i class="fa fa-share-square-o"></i> Export
+				      </button>
+						</div>
+						<div class="col-sm-4"></div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-10 content">
+				<table class="table table-bordered" id="tableConfigKitchen">
+					<thead>
+						<tr>
+							<th scope="col" width="5%">STT</th>
+							<!-- <th scope="col" width="10%">Thao tác</th> -->
+							<th scope="col" width="15%">Tên bếp</th>
+							<th scope="col" width="15%">Vị trí bếp</th>
+							<th scope="col" width="25%">Bếp trưởng</th>
+							<th scope="col" width="40%">Ghi chú</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="x in formConfigs track by $index">
+							<td>{{$index + 1}}</td>
+							<td>{{x.nameOfKitchen}}</td>
+							<td>{{x.positionOfKitchen}}</td>
+							<td>{{x.nameOfChefl}}</td>
+							<td>{{x.comment}}</td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+
+	</div>
+
+</body>
+
+</html>
